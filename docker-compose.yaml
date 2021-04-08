@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  orm-app:
+    container_name: orm-app
+    build: .
+    image: orm-app
+    ports: 
+      - 5000:5000 
+    restart: on-failure         
+    networks:
+      - orm
+
+  # orm-pdb:
+  #   image: postgres:latest
+  #   container_name: orm-pdb
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRESQL_USER} 
+  #     - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD} 
+  #     - POSTGRES_DB=${POSTGRESQL_DATABASE} 
+  #     - DATABASE_HOST=${POSTGRESQL_HOST} 
+  #     - PGDATA=/pgdata
+  #   ports:
+  #     - '5435:5432'
+  #   volumes:
+  #     - ./pgdata:/pgdata
+  #   networks:
+  #     - orm               
+
+# Networks to be created to facilitate communication between containers
+networks:
+  orm:
+    driver: bridge
