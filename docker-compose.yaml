@@ -5,29 +5,39 @@ services:
     container_name: orm-app
     build: .
     image: orm-app
+    env_file: ./.env
     ports: 
       - 5000:5000 
-    restart: on-failure         
+    restart: on-failure
+    volumes:
+      - ./app:/app       
     networks:
       - orm
+    depends_on:
+      - orm-pdb
 
-  # orm-pdb:
-  #   image: postgres:latest
-  #   container_name: orm-pdb
-  #   environment:
-  #     - POSTGRES_USER=${POSTGRESQL_USER} 
-  #     - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD} 
-  #     - POSTGRES_DB=${POSTGRESQL_DATABASE} 
-  #     - DATABASE_HOST=${POSTGRESQL_HOST} 
-  #     - PGDATA=/pgdata
-  #   ports:
-  #     - '5435:5432'
-  #   volumes:
-  #     - ./pgdata:/pgdata
-  #   networks:
-  #     - orm               
+  orm-pdb:
+    image: postgres:latest
+    container_name: orm-pdb
+    privileged: true
+    environment:
+      - POSTGRES_USER=${POSTGRESQL_USER} 
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD} 
+      - POSTGRES_DB=${POSTGRESQL_DATABASE} 
+      - DATABASE_HOST=${POSTGRESQL_HOST} 
+    ports:
+      - '5435:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - orm        
+
+# Database volumes
+volumes:
+  pgdata:
 
 # Networks to be created to facilitate communication between containers
 networks:
   orm:
     driver: bridge
+
