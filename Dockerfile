@@ -11,5 +11,4 @@ COPY ./app .
 
 # export run file
 ENV FLASK_APP=/app/__init__.py
-RUN chmod u+x ./entrypoint.sh
-CMD [ "./entrypoint.sh"]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

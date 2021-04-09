@@ -14,27 +14,38 @@ services:
     networks:
       - orm
     depends_on:
-      - orm-pdb
+      - orm-mdb
 
-  orm-pdb:
-    image: postgres:latest
-    container_name: orm-pdb
-    privileged: true
+  orm-mdb:
+    image: mongo
     environment:
-      - POSTGRES_USER=${POSTGRESQL_USER} 
-      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD} 
-      - POSTGRES_DB=${POSTGRESQL_DATABASE} 
-      - DATABASE_HOST=${POSTGRESQL_HOST} 
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     ports:
-      - '5435:5432'
+      - ${MONGODB_PORT}:${MONGODB_PORT}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - dbdata:/data/db
     networks:
-      - orm        
+      - orm
+  
+  # mongo-express:
+  #   image: mongo-express
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_BASICAUTH_USERNAME: ${ME_BASIC_USER}
+  #     ME_CONFIG_BASICAUTH_PASSWORD: ${ME_BASIC_PASSWORD}!
+  #     ME_CONFIG_MONGODB_PORT: ${MONGODB_PORT}
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${ME_ADMIN_USER}
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${ME_ADMIN_PASSWORD}!
+  #   depends_on:
+  #     - orm-mdb
+  #   networks:
+  #     - orm
 
 # Database volumes
 volumes:
-  pgdata:
+  dbdata:
 
 # Networks to be created to facilitate communication between containers
 networks:
