@@ -8,7 +8,6 @@ RUN pip3 install -r requirements.txt
 
 # copy app files
 COPY ./app .
-COPY ./.env .
 
 # export run file
 ENV FLASK_APP=/app/__init__.py
