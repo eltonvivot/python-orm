@@ -18,12 +18,7 @@ def handle_users():
 
     elif request.method == 'GET':
         users = User.query.all()
-        results = [
-            {
-                "name": user.name,
-                "login": user.login,
-                "password": user.password
-            } for user in users]
+        results = [ user.to_json() for user in users]
 
         return {"count": len(results), "users": results}
 
@@ -34,11 +29,7 @@ def handle_user(user_id):
     # user = User.query.filter_by(name=user_id).first_or_404()
 
     if request.method == 'GET':
-        response = {
-            "name": user.name,
-            "login": user.login,
-            "password": user.password
-        }
+        response = user.to_json()
         return {"message": "success", "user": response}
 
     elif request.method == 'PUT':

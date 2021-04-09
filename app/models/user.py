@@ -13,5 +13,7 @@ class User(db.Model):
         self.login = login
         self.password = password
 
-    def __repr__(self):
-        return f"<User {self.name}>"
+    def to_json(self):
+        return {"name": self.name,
+                "login": self.login,
+                "password": self.password}
