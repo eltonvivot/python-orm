@@ -8,8 +8,7 @@ class Reservation(db.Model):
     starts_at = db.Column(db.Datetime())
     ends_at = db.Column(db.Datetime())
     enabled = db.Column(db.Boolean)
-
-    hosts_images_map = db.Column(JSON()) # definir função para tratar |-| [{"host": "dell01", "image": "ubuntu"}] 
+    hosts_images_map = db.Column(JSON()) # tratar como relacionamento |-| [{"host": "dell01", "image": "ubuntu"}] 
 
     def __init__(self, starts_at, ends_at, enabled=True, hosts_images_map=None):
         self.starts_at = starts_at

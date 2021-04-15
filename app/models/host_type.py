@@ -1,5 +1,5 @@
 from . import db
-from sqlalchemy.dialects.postgresql import JSON # json type 
+from sqlalchemy.dialects.postgresql import JSON  # json type
 
 class HostType(db.Model):
     __tablename__ = 'host_types'

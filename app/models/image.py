@@ -1,5 +1,5 @@
 from . import db
-from sqlalchemy.dialects.postgresql import JSON # json type 
+from sqlalchemy.dialects.postgresql import JSON  # json type
 
 class Image(db.Model):
     __tablename__ = 'images'
@@ -7,10 +7,9 @@ class Image(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     name = db.Column(db.String())
     attributes = db.Column(JSON())
-
-    host_id = db.Column(db.Integer, db.ForeignKey('host.id'))
     reservation_id = db.Column(db.Integer, db.ForeignKey('reservations.id'))
 
-    def __init__(self, name, attributes):
+    def __init__(self, name, attributes, reservation_id):
         self.name = name
         self.attributes = attributes
+        self.reservation_id = reservation_id

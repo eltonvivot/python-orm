@@ -1,5 +1,5 @@
 from . import db
-from sqlalchemy.dialects.postgresql import JSON # json type 
+from sqlalchemy.dialects.postgresql import JSON  # json type
 
 class Host(db.Model):
     __tablename__ = 'hosts'
@@ -10,7 +10,7 @@ class Host(db.Model):
     enabled = db.Column(db.Boolean)
     host_type_id = db.Column(db.Integer, db.ForeignKey('host_types.id'))
     # testing object reference
-    host_type = relationship("HostType", backref=backref("hosts", uselist=False))
+    host_type = db.relationship("HostType", backref=db.backref("hosts", uselist=False))
 
     def __init__(self, name, attributes, enabled, host_type=None):
         self.name = name
