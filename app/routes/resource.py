@@ -26,13 +26,16 @@ def handle_resource(resource_type, resource_name):
     obj_type = getattr(sys.modules[__name__], resource_type)
     resource = obj_type.objects(name=resource_name).first()
     if not resource: return jsonify({'error': 'data not found'})
-    if request.method == 'GET': return pretty_json(resource)
+    if request.method == 'GET': return handle_get(resource)
     elif request.method == 'PUT': return handle_put(resource)
     elif request.method == 'DELETE': return handle_delete(resource)
 
 def handle_get_all(obj_type):
     results = obj_type.objects()
     return {"count": len(results), "results": pretty_json(results)}
+
+def handle_get(resource):
+    return {"result": pretty_json(resource)}
 
 def handle_post(obj_type):
     if not request.is_json: return {"error": "The request payload is not in JSON format"}
