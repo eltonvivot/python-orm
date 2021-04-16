@@ -10,8 +10,8 @@ def handle_users():
     if request.method == 'POST':
         if request.is_json:
             data = request.get_json()
-            new_user = User()
-            new_user.serialize(data) 
+            new_user = User(**data)
+            # new_user.serialize(data) 
             new_user.save()
             return {"message": f"user {new_user.name} has been created successfully."}
         else:
@@ -33,7 +33,8 @@ def handle_user(user_name):
 
     elif request.method == 'PUT':
         data = request.get_json()
-        user.serialize(data)
+        #user.serialize(data)
+        from_json(data, created=True)
         user.save()
         return {"message": f"user {user.name} successfully updated"}
 

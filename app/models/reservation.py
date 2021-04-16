@@ -1,4 +1,5 @@
-from mongoengine import Document, StringField, BooleanField, DatetimeField
+from mongoengine_goodjson import Document
+from mongoengine import StringField, BooleanField, DatetimeField
 
 class Reservation(Document):
     starts_at = DatetimeField()

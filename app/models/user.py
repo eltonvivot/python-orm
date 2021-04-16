@@ -1,4 +1,5 @@
-from mongoengine import Document, StringField
+from mongoengine_goodjson import Document
+from mongoengine import StringField
 
 class User(Document):
 

@@ -1,6 +1,7 @@
-from mongoengine import Document, StringField
+from mongoengine_goodjson import EmbeddedDocument
+from mongoengine import StringField
 
-class SSHKey(Document):
+class SSHKey(EmbeddedDocument):
     private_key = StringField()
     public_key = StringField()
 
