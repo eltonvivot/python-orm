@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from ..models.user import User
-from ..utils.formatter import obj_to_json
+from..utils.json import pretty_json
 
 user_bp = Blueprint('user', '__name__', url_prefix='/users')
 
@@ -11,15 +11,14 @@ def handle_users():
         if request.is_json:
             data = request.get_json()
             new_user = User(**data)
-            # new_user.serialize(data) 
             new_user.save()
-            return {"message": f"user {new_user.name} has been created successfully."}
+            return {"message": f"user has been created successfully.", "result": json.loads(new_user.to_json())}
         else:
             return {"error": "The request payload is not in JSON format"} 
 
     elif request.method == 'GET':
-        results = User.objects
-        return {"count": len(results), "results": jsonify(results.to_json())}
+        results = User.objects()
+        return {"count": len(results), "results": pretty_json(results)}
 
 # Manage specific 
 @user_bp.route('/<user_name>', methods=['GET', 'PUT', 'DELETE'])
@@ -29,11 +28,10 @@ def handle_user(user_name):
         return jsonify({'error': 'data not found'})
 
     if request.method == 'GET':
-        return jsonify(user.to_json())
+        return pretty_json(user)
 
     elif request.method == 'PUT':
         data = request.get_json()
-        #user.serialize(data)
         from_json(data, created=True)
         user.save()
         return {"message": f"user {user.name} successfully updated"}

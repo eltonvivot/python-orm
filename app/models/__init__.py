@@ -7,3 +7,4 @@ def init_app(app):
         db='orm-db',
         host='mongodb://orm:orm@orm-mdb:27017/?authSource=admin'
     )
+
