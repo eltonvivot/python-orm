@@ -1,17 +1,17 @@
-from . import db
+from mongoengine import Document, StringField
 
-class User(db.Document):
+class User(Document):
 
-    name = db.StringField()
-    login = db.StringField()
-    password = db.StringField()
+    name = StringField()
+    login = StringField()
+    password = StringField()
 
-    def __init__(self, name, login, password):
-        self.name = name
-        self.login = login
-        self.password = password
+    def serialize(self, data):
+        self.name = data["name"]
+        self.login = data["login"]
+        self.password = data["password"]
 
-    def to_json(self):
-        return {"name": self.name,
-                "login": self.email,
-                "password": self.password}
+    # def to_json(self):
+    #     return {"name": self.name,
+    #             "login": self.login,
+    #             "password": self.password}

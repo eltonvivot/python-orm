@@ -1,7 +1,5 @@
-from flask_mongoengine import MongoEngine
+from mongoengine import connect
 import os
-
-db = MongoEngine()
 
 def init_app(app):
     # database config
@@ -11,11 +9,7 @@ def init_app(app):
     # 'port': os.environ.get('MONGODB_PORT')
     # }
 
-    app.config['MONGODB_SETTINGS'] = {
-    'db': "orm-db",
-    'host': "orm-mdb",
-    'port': 5432
-    }
-
-    # init
-    db.init_app(app)
+    connect(
+        db='orm-db',
+        host='mongodb://orm:orm@orm-mdb:27017/?authSource=admin'
+    )

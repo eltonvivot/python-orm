@@ -12,3 +12,6 @@ mongoengine==0.23.0
 pymongo==3.11.3
 Werkzeug==1.0.1
 WTForms==2.3.3
+mongoengine-goodjson==1.1.8
+python-dateutil==2.8.1
+six==1.15.0

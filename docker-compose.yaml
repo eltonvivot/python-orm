@@ -18,11 +18,12 @@ services:
 
   orm-mdb:
     image: mongo
+    container_name: orm-mdb
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     ports:
-      - ${MONGODB_PORT}:${MONGODB_PORT}
+      - 27017:27017
     volumes:
       - dbdata:/data/db
     networks:
