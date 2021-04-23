@@ -1,6 +1,6 @@
 from mongoengine_goodjson import Document
-from mongoengine import StringField,BooleanField, DatetimeField, IntField, EmbeddedDocumentField
-from .ssh_key import SSHKey
+from mongoengine import StringField, BooleanField, IntField, EmbeddedDocumentField
+from .ssh import SSHKey
 
 class Member(Document):
     name = StringField()
@@ -10,4 +10,3 @@ class Member(Document):
     privilege = IntField()  # definir níveis (documento)
     enabled = BooleanField()
     ssh_key = EmbeddedDocumentField(SSHKey)
-
